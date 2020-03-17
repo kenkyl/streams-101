@@ -17,9 +17,9 @@ class StreamProducer:
     def produce(self):
         random.seed()
         while True:
-            #i = random.rand
+            group = random.randint(1, self.num_consumers)
             data = {
-                'temp-sensor': random.uniform(55.0, 90.0)
+                'temp-sensor': random.uniform(65.0, 75.0)
             }
             print(f'producer sending data: {data}')
             # XADD my-stream * temp-sensor <num>
