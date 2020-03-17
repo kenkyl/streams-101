@@ -22,7 +22,9 @@ class StreamProducer:
                 'temp-sensor': random.uniform(55.0, 90.0)
             }
             print(f'producer sending data: {data}')
-            self.redis.xadd(STREAM_NAME, data)
+            # XADD my-stream * temp-sensor <num>
+            self.redis.xadd(STREAM_NAME, data, id='*')
+            # send every three seconds
             time.sleep(3)
 
 # initialize and start consumers
