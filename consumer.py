@@ -64,6 +64,7 @@ def main():
     c_num = sys.argv[2]
     consumer = StreamConsumer(REDIS_HOST, REDIS_PORT, int(group), int(c_num))
     consumer.consume()
+    print('done consuming!')
 
 if __name__ == "__main__":
     main()    

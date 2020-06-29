@@ -4,8 +4,7 @@ import time
 
 # consts
 STREAM_NAME = 'my-stream'
-REDIS_HOST = 'localhost'
-REDIS_PORT = 6379 
+
 
 # class to produce data 
 class StreamProducer:
