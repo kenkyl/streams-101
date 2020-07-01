@@ -1,21 +1,24 @@
 import redis
-import time
 import random
+import time
 
-STREAM_NAME = ''
-
-def main():
-       r = redis.StrictRedis(REDIS_HOST, REDIS_PORT, charset="utf-8", decode_responses=True)
+REDIS_HOST = 'localhost'
+REDIS_PORT = 6379 
+STREAM_NAME = 'process-stream:3'
+ 
+def main(): 
+    r = redis.StrictRedis(REDIS_HOST, REDIS_PORT, charset="utf-8", decode_responses=True)
 
     while True:
-        # Generatre pseduo random task id 
-        new_task_id = random.randint(1000,10000)
-        message = f'process # {new_task_id} is complete'
+        # Generatre pseduo random process id and completion number
+        pid = random.randint(1000,10000)
+        num = random.randint(0,100)
+        message = { 'pid': pid, 'completion-value': num}
 
         ### Publisher uses PUBLISH to send a message to Subscribers on the Channel ###
-        res = r.publish(CHANNEL_NAME, message)
+        res = r.xadd(STREAM_NAME, message)
 
-        print(f'PubSub Publisher sent \"{message}\" to channel {CHANNEL_NAME}')
+        print(f'Streams Producer sent \"{message}\" to stream {STREAM_NAME}')
         time.sleep(3)
 
 if __name__ == "__main__":
